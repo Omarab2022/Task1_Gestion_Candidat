@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 @Entity
 @Getter
 @Setter
@@ -22,5 +25,8 @@ public class CertificateTemplate {
 	
 	private String templatePath;
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 }
