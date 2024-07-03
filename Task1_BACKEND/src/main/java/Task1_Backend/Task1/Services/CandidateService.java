@@ -64,4 +64,9 @@ public class CandidateService {
 		return candidateTransformer.toDTO(candidat);
 	}
 
+
+	public Long getNumberOfCandidates(){
+		return candidateRepository.count();
+	}
+
 }

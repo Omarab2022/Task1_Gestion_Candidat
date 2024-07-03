@@ -28,6 +28,10 @@ public class CertificateTemplateService {
 				.collect(Collectors.toList());
 	}
 
+	public Long getNumberOfTemplates() {
+		return certificateTemplateRepository.count();
+	}
+
 //	public CertificateTemplateDTO getTemplateById(Long id) {
 //		return certificateTemplateRepository.findById(id)
 //				.map(certificateTemplateTransformer::toDTO)

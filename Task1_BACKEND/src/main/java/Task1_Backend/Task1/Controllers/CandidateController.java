@@ -40,4 +40,9 @@ public class CandidateController {
 	public CandidateDTO UpdateCandidate(Long id, CandidateDTO candidateDTO){
 		return candidateService.updateCandidat(id, candidateDTO);
 	}
+
+	@GetMapping("/numberofcandidates")
+	public Long GetNumberOfCandidates(){
+		return candidateService.getNumberOfCandidates();
+	}
 }

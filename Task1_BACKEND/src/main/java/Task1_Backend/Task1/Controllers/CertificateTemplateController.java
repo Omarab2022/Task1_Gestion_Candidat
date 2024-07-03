@@ -25,4 +25,9 @@ public class CertificateTemplateController {
 	public List<CertificateTemplateDTO> getAllTemplates() {
 		return certificateTemplateService.getAllTemplates();
 	}
+
+	@GetMapping("/numberoftemplates")
+	public Long getNumberOfTemplates() {
+		return certificateTemplateService.getNumberOfTemplates();
+	}
 }
