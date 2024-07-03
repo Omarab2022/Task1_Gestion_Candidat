@@ -27,7 +27,7 @@ public class CandidateController {
 	}
 
 	@GetMapping("/{id}")
-	public CandidateDTO GetCandidateById(Long id){
+	public CandidateDTO GetCandidateById(@PathVariable Long id){
 		return candidateService.getCandidatById(id);
 	}
 
@@ -37,7 +37,7 @@ public class CandidateController {
 	}
 
 	@PutMapping("/update/{id}")
-	public CandidateDTO UpdateCandidate(Long id, CandidateDTO candidateDTO){
+	public CandidateDTO UpdateCandidate(@PathVariable Long id, @RequestBody CandidateDTO candidateDTO) {
 		return candidateService.updateCandidat(id, candidateDTO);
 	}
 
