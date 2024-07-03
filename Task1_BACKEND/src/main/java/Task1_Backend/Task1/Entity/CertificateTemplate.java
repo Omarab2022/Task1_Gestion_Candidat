@@ -8,5 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CertificateTemplate {
+
+
+	private Long id;
+
+	private String name;
+	
+	private String templatePath;
+
+
 }
