@@ -1,0 +1,65 @@
+<head>
+
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" [ngClass]="{ 'close': isSidebarClosed }">
+
+    <a href="#" class="logo">
+      <i class='bx bx-code-alt'></i>
+      <div class="logo-name"><span>NTT</span>Form</div>
+    </a>
+    <ul class="side-menu">
+      <li routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a><i
+            class='bx bxs-dashboard'></i>Dashboard</a></li>
+      <li routerLink="/candidat" routerLinkActive="active"><a><i class='bx bx-user-circle'></i>Candidat</a></li>
+      <li routerLink="/certificate" routerLinkActive="active"><a><i class='bx bx-analyse'></i>Certificates</a></li>
+      <li routerLink="/formations" routerLinkActive="active"><a><i class='bx bx-message-square-dots'></i>Formations</a>
+      </li>
+      <!-- <li><a><i class='bx bx-group'></i>Users</a></li>
+      <li><a><i class='bx bx-cog'></i>Settings</a></li> -->
+    </ul>
+    <ul class="side-menu">
+      <li>
+        <a class="logout">
+          <i class='bx bx-log-out-circle'></i>
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- End of Sidebar -->
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Navbar -->
+    <nav>
+      <i class='bx bx-menu' (click)="toggleSidebar()"></i>
+
+      <form action="#">
+
+      </form>
+      <!-- <input type="checkbox" id="theme-toggle" hidden>
+      <label for="theme-toggle" class="theme-toggle"></label> -->
+
+      <a href="#" class="profile">
+        <img src="../assets/images/logo.png">
+      </a>
+    </nav>
+
+    <!-- End of Navbar -->
+
+    <main>
+
+      <router-outlet></router-outlet>
+
+    </main>
+
+  </div>
+
+  <script src="../assets/index.js"></script>
+</body>
