@@ -1,0 +1,56 @@
+<div class="header">
+    <div class="left">
+        <h1>Candidat</h1>
+        <ul class="breadcrumb">
+            <li><a href="#">All</a></li>
+            <li><a href="#" class="active">Candidats</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="bottom-data">
+    <div class="orders">
+        <div class="header">
+            <i class='bx bx-receipt'></i>
+            <h3>Our Candidats</h3>
+
+            <a href=""> <i style="background-color: blue;border-radius: 50%; color: aliceblue;"
+                    class='bx bx-plus'></i></a>
+
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Score</th>
+                    <th>Date Naissance</th>
+                    <th>Delete</th>
+                    <th>Update</th>
+                    <th>View Details</th>
+                    <th>Print</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let candidat of candidats">
+
+                    <td>{{ candidat.id }}</td>
+                    <td>{{ candidat.name }}</td>
+                    <td>{{ candidat.score }}</td>
+                    <td>{{ candidat.dateNaissance }}</td>
+
+
+                    <td> <button class="btn btn-danger" (click)="onDelete(candidat.id)"> Delete</button></td>
+                    <td> <button class="btn btn-success" (click)="showUpdateForm(candidat)"> Update</button></td>
+                    <td> <button class="btn btn-warning" (click)="showDetails(candidat.id)"> Details</button></td>
+                    <td> <button class="btn btn-primary"> Print</button></td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

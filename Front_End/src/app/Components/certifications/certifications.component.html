@@ -1,0 +1,56 @@
+<div class="header">
+    <div class="left">
+        <h1>Certifications</h1>
+        <ul class="breadcrumb">
+            <li><a href="#">Template</a></li>
+            <li><a href="#" class="active">Certifications</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="bottom-data">
+    <div class="orders">
+        <div class="header">
+            <i class='bx bx-receipt'></i>
+            <h3>Our Certifications Template</h3>
+
+            <a href=""> <i style="background-color: blue;border-radius: 50%; color: aliceblue;"
+                    class='bx bx-plus'></i></a>
+
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Path</th>
+
+                    <th>Delete</th>
+                    <th>Update</th>
+                    <th>View Details</th>
+                    <th>Print</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let certif of certificates">
+
+                    <td>{{ certif.id }}</td>
+                    <td>{{ certif.name }}</td>
+                    <td>{{ certif.templatePath }}</td>
+
+
+
+                    <td> <button class="btn btn-danger"> Delete</button></td>
+                    <td> <button class="btn btn-success"> Update</button></td>
+                    <td> <button class="btn btn-warning"> Details</button></td>
+                    <td> <button class="btn btn-primary"> Print</button></td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
