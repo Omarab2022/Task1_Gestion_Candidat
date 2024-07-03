@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @Getter
 @Setter
@@ -20,4 +21,6 @@ public class CertificateTemplate {
 	private String name;
 	
 	private String templatePath;
+
+
 }
