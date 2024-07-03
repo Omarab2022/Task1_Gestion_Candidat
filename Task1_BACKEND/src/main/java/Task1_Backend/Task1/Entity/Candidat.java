@@ -14,13 +14,16 @@ import java.time.LocalDate;
 @Table(name= "Candidat")
 public class Candidat {
 
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false)
 	private String name;
 
 	private Double score;
 
+	@Column(name = "date_naissance")
 	private LocalDate dateNaissance;
 
 
