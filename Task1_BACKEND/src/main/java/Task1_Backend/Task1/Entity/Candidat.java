@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name= "Candidat")
 public class Candidat {
 
