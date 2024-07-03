@@ -7,10 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-<<<<<<< Updated upstream
-
-public class CertificateTemplate {
-=======
 @Entity
 @Getter
 @Setter
@@ -29,5 +25,5 @@ public class CertificateTemplate {
 
 	@Column(name = "template_path")
 	private String templatePath;
->>>>>>> Stashed changes
+
 }

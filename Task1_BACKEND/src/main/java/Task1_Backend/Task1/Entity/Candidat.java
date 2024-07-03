@@ -5,12 +5,15 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-
+@Entity
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name= "Candidat")
 public class Candidat {
 
-
-<<<<<<< Updated upstream
-=======
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -23,6 +26,5 @@ public class Candidat {
 	@Column(name = "date_naissance")
 	private LocalDate dateNaissance;
 
->>>>>>> Stashed changes
 
 }
