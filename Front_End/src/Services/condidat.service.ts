@@ -14,8 +14,8 @@ export class CondidatService {
     return this.http.get<Array<Candidat>>("http://localhost:8080/api/candidate/all");
   }
 
-  public deleteCondidat(id: number):Observable<any>{
-    return this.http.delete("http://localhost:8080/delete/"+id);
+  public deleteCondidat(id: number): Observable<any> {
+    return this.http.delete(`http://localhost:8080/api/candidate/delete/${id}`);
   }
 
   public getCandidatById(id: number):Observable<Candidat>{
@@ -28,5 +28,9 @@ export class CondidatService {
 
   public updateCandidat(id: number, candidat: Candidat): Observable<Candidat> {
     return this.http.put<Candidat>(`http://localhost:8080/api/candidate/update/${id}`, candidat);
+  }
+
+  public addCandidat(candidat: Candidat): Observable<Candidat> {
+    return this.http.post<Candidat>(`http://localhost:8080/api/candidate/add`, candidat);
   }
 }

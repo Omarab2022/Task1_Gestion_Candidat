@@ -14,8 +14,9 @@
             <i class='bx bx-receipt'></i>
             <h3>Our Candidats</h3>
 
-            <a href=""> <i style="background-color: blue;border-radius: 50%; color: aliceblue;"
-                    class='bx bx-plus'></i></a>
+            <a href="javascript:void(0);" (click)="showAddCandidatForm()">
+                <i style="background-color: blue;border-radius: 50%; color: aliceblue;" class='bx bx-plus'></i>
+            </a>
 
         </div>
 
@@ -31,11 +32,12 @@
                     <th>Update</th>
                     <th>View Details</th>
                     <th>Print</th>
+                    <th>Printed</th>
 
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let candidat of candidats">
+                <tr *ngFor="let candidat of candidats ; let i = index">
 
                     <td>{{ candidat.id }}</td>
                     <td>{{ candidat.name }}</td>
@@ -46,7 +48,17 @@
                     <td> <button class="btn btn-danger" (click)="onDelete(candidat.id)"> Delete</button></td>
                     <td> <button class="btn btn-success" (click)="showUpdateForm(candidat)"> Update</button></td>
                     <td> <button class="btn btn-warning" (click)="showDetails(candidat.id)"> Details</button></td>
-                    <td> <button class="btn btn-primary"> Print</button></td>
+                    <td>
+                        <button class="btn btn-primary" (click)="showCertificateSelectionModal(candidat)">Print</button>
+                    </td>
+                    <td>
+                        <div class="checkbox-wrapper">
+                            <input [id]="'_checkbox-' + i" type="checkbox" [checked]="candidat.isPrinted" disabled>
+                            <label [for]="'_checkbox-' + i">
+                                <div class="tick_mark"></div>
+                            </label>
+                        </div>
+                    </td>
 
 
                 </tr>

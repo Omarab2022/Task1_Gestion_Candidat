@@ -3,6 +3,7 @@ export interface Candidat {
   name: string;
   score:number;
   dateNaissance: string;
+  isPrinted: boolean;
 }
 
 

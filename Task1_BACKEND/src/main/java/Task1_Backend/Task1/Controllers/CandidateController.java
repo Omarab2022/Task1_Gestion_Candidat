@@ -32,9 +32,10 @@ public class CandidateController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public void DeleteCandidate(Long id){
+	public void DeleteCandidate(@PathVariable Long id) {
 		candidateService.deleteCandidat(id);
 	}
+
 
 	@PutMapping("/update/{id}")
 	public CandidateDTO UpdateCandidate(@PathVariable Long id, @RequestBody CandidateDTO candidateDTO) {
@@ -44,5 +45,10 @@ public class CandidateController {
 	@GetMapping("/numberofcandidates")
 	public Long GetNumberOfCandidates(){
 		return candidateService.getNumberOfCandidates();
+	}
+
+	@PostMapping("/add")
+	public CandidateDTO AddCandidate(@RequestBody CandidateDTO candidateDTO){
+		return candidateService.addCandidat(candidateDTO);
 	}
 }

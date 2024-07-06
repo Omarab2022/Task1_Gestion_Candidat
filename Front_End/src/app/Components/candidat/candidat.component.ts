@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CondidatService } from '../../../Services/condidat.service';
-import { Candidat } from '../../../Models/candidat.model';
+import { Candidat, CertificateTemplate } from '../../../Models/candidat.model';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CertificateTemplateService } from '../../../Services/certificate-template.service';
 
 @Component({
   selector: 'app-candidat',
@@ -15,11 +16,14 @@ export class CandidatComponent implements OnInit{
   public candidats: any;
   public selectedCandidat: Candidat | null = null;
   updateForm :FormGroup;
+  certificates: CertificateTemplate[] = [];
 
   
   constructor(
     private candidatservice: CondidatService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private certificateService: CertificateTemplateService,
+    private changeDetectorRef: ChangeDetectorRef 
   ) {
     this.updateForm = this.formBuilder.group({
       id: ['', Validators.required],
@@ -32,6 +36,7 @@ export class CandidatComponent implements OnInit{
   ngOnInit(): void {
    
     this.getAllCandidats();
+    this.getAllCertificates();
  
   }
 
@@ -51,6 +56,62 @@ export class CandidatComponent implements OnInit{
     });
   }
 
+  getAllCertificates() {
+    this.certificateService.getCertificateTemplates().subscribe({
+      next: (certificates) => {
+        this.certificates = certificates;
+      },
+      error: (error) => {
+        console.error('Error fetching certificates:', error);
+      }
+    });
+  }
+
+  showAddCandidatForm() {
+    Swal.fire({
+      title: 'Add New Candidate',
+      html:
+        '<input id="name" class="swal2-input" placeholder="Name">' +
+        '<input id="score" class="swal2-input" placeholder="Score">' +
+        '<input id="dateNaissance" class="swal2-input" placeholder="Date of Birth">',
+      focusConfirm: false,
+      preConfirm: () => {
+        return {
+          name: (document.getElementById('name') as HTMLInputElement).value,
+          score: parseFloat((document.getElementById('score') as HTMLInputElement).value),
+          dateNaissance: (document.getElementById('dateNaissance') as HTMLInputElement).value
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.addCandidat(result.value);
+      }
+    });
+  }
+  
+  addCandidat(candidatData: any) {
+    if (!candidatData.name || !candidatData.score || !candidatData.dateNaissance) {
+      Swal.fire('Error', 'All fields are required', 'error');
+      return;
+    }
+  
+    if (isNaN(candidatData.score) || candidatData.score < 0 || candidatData.score > 100) {
+      Swal.fire('Error', 'Score must be a number between 0 and 100', 'error');
+      return;
+    }
+  
+    this.candidatservice.addCandidat(candidatData).subscribe({
+      next: (newCandidat) => {
+        console.log('New candidate added:', newCandidat);
+        this.getAllCandidats(); // Refresh the list
+        Swal.fire('Success', 'New candidate added successfully', 'success');
+      },
+      error: (error) => {
+        console.error('Error adding new candidate:', error);
+        Swal.fire('Error', 'Failed to add new candidate', 'error');
+      }
+    });
+  }
 
   onDelete(id: any) {
     Swal.fire({
@@ -159,6 +220,179 @@ export class CandidatComponent implements OnInit{
       }
     });
   }
+
+
+
+
+ showCertificateSelectionModal(candidat: Candidat) {
+  const certificateOptions = this.certificates.map(cert => ({
+    value: cert.id,
+    text: cert.name,
+    imageUrl: this.getImageUrl(cert.templatePath)
+  }));
+
+  let currentIndex = 0;
+
+  const updateSlideContent = (index: number) => {
+    const cert = certificateOptions[index];
+    const content = Swal.getHtmlContainer();
+    if (content) {
+      const img = content.querySelector('img') as HTMLImageElement;
+      const text = content.querySelector('p') as HTMLParagraphElement;
+      if (img && text) {
+        img.src = cert.imageUrl;
+        img.alt = cert.text;
+        text.textContent = cert.text;
+      }
+    }
+  };
+
+  const showPreview = () => {
+    const cert = certificateOptions[currentIndex];
+    Swal.fire({
+      title: '',
+      html: `
+        <div class="preview-container">
+          <button class="close-button">&times;</button>
+          <img src="${cert.imageUrl}" alt="${cert.text}" class="preview-image">
+        </div>
+      `,
+      showConfirmButton: false,
+      showCancelButton: false,
+      background: '#000',
+      customClass: {
+        container: 'preview-swal-container',
+        popup: 'preview-swal-popup'
+      },
+      didOpen: () => {
+        const closeButton = Swal.getPopup()!.querySelector('.close-button') as HTMLElement;
+        closeButton.addEventListener('click', () => Swal.close());
+      }
+    });
+  };
+
+  Swal.fire({
+    title: 'Select a Certificate Template',
+    html: `
+      <div class="carousel-container">
+        <button id="prevButton" class="carousel-arrow left">&#10094;</button>
+        <div class="carousel-content">
+          <img src="${certificateOptions[0].imageUrl}" alt="${certificateOptions[0].text}" style="max-width: 200px; max-height: 200px;">
+          <p>${certificateOptions[0].text}</p>
+        </div>
+        <button id="nextButton" class="carousel-arrow right">&#10095;</button>
+      </div>
+    `,
+    showCancelButton: true,
+    showConfirmButton: true,
+    showDenyButton: true,
+    confirmButtonText: 'Print',
+    denyButtonText: 'Preview',
+    cancelButtonText: 'Cancel',
+    customClass: {
+      container: 'custom-swal-container'
+    },
+    didOpen: () => {
+      const prevButton = Swal.getPopup()!.querySelector('#prevButton') as HTMLElement;
+      const nextButton = Swal.getPopup()!.querySelector('#nextButton') as HTMLElement;
+
+      prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + certificateOptions.length) % certificateOptions.length;
+        updateSlideContent(currentIndex);
+      });
+
+      nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % certificateOptions.length;
+        updateSlideContent(currentIndex);
+      });
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.printCertificate(candidat, certificateOptions[currentIndex].value);
+    } else if (result.isDenied) {
+      showPreview();
+    }
+  });
+}
+
+  getImageUrl(templatePath: string): string {
+    if (!templatePath) return '';
+    const fileName = templatePath.split('/').pop();
+    return `http://localhost:8080/certificate-templates/${fileName}`;
+  }
+
+
+
+  //print certificate 
+
+printCertificate(candidat: Candidat, templateId: number) {
+
+  const certificateImageUrl = this.getImageUrl(this.certificates.find(c => c.id === templateId)?.templatePath || '');
+
+  const printWindow = window.open('', '_blank');
+  if (printWindow) {
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Certificate for ${candidat.name}</title>
+          <style>
+            body {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+              font-family: Arial, sans-serif;
+            }
+            .certificate-container {
+              position: relative;
+              width: 800px;
+              height: 600px;
+            }
+            .certificate-image {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            }
+            .certificate-text {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+              color: #000;
+              font-size: 24px;
+              font-weight: bold;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="certificate-container">
+            <img src="${certificateImageUrl}" alt="Certificate Template" class="certificate-image">
+            <div class="certificate-text">
+             
+              <h2>${candidat.name}</h2>
+              <p>has successfully completed the course</p>
+              <p>with a score of ${candidat.score}%</p>
+              <p>Date: ${new Date().toLocaleDateString()}</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `);
+
+    printWindow.document.querySelector('img')?.addEventListener('load', () => {
+      printWindow.print();
+      printWindow.close();
+      candidat.isPrinted = true;
+      this.changeDetectorRef.detectChanges();
+      
+    });
+  } else {
+    console.error('Unable to open print window');
+    Swal.fire('Error', 'Unable to open print window. Please check your popup blocker settings.', 'error');
+  }
+}
 
 
 }

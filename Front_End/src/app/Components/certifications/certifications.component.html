@@ -14,8 +14,9 @@
             <i class='bx bx-receipt'></i>
             <h3>Our Certifications Template</h3>
 
-            <a href=""> <i style="background-color: blue;border-radius: 50%; color: aliceblue;"
-                    class='bx bx-plus'></i></a>
+            <a (click)="showAddForm()">
+                <i style="background-color: blue;border-radius: 50%; color: aliceblue;" class='bx bx-plus'></i>
+            </a>
 
         </div>
 
@@ -25,7 +26,7 @@
 
                     <th>Id</th>
                     <th>Name</th>
-                    <th>Path</th>
+
 
                     <th>Delete</th>
                     <th>Update</th>
@@ -39,14 +40,22 @@
 
                     <td>{{ certif.id }}</td>
                     <td>{{ certif.name }}</td>
-                    <td>{{ certif.templatePath }}</td>
 
 
 
-                    <td> <button class="btn btn-danger"> Delete</button></td>
-                    <td> <button class="btn btn-success"> Update</button></td>
-                    <td> <button class="btn btn-warning"> Details</button></td>
-                    <td> <button class="btn btn-primary"> Print</button></td>
+
+                    <td>
+                        <button class="btn btn-danger" (click)="onDelete(certif.id)"> Delete</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" (click)="showUpdateForm(certif)"> Update</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" (click)="showDetails(certif.id)"> Details</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary"> Print</button>
+                    </td>
 
 
                 </tr>

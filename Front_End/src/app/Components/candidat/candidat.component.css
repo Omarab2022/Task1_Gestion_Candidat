@@ -1,0 +1,231 @@
+::ng-deep .custom-radio-input {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+::ng-deep .custom-radio-input .swal2-radio {
+    display: flex;
+    flex-direction: column;
+}
+
+::ng-deep .custom-radio-input .swal2-radio label {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+::ng-deep .custom-radio-input .swal2-radio label img {
+    margin-right: 10px;
+}
+
+::ng-deep .custom-swal-container .carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+::ng-deep .custom-swal-container .carousel-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+::ng-deep .custom-swal-container .carousel-content img {
+    max-width: 200px;
+    max-height: 200px;
+    margin-bottom: 10px;
+}
+
+::ng-deep .custom-swal-container .carousel-arrow {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+::ng-deep .custom-swal-container .carousel-arrow:hover {
+    color: #007bff;
+}
+
+::ng-deep .custom-swal-container .carousel-arrow:focus {
+    outline: none;
+}
+
+::ng-deep .custom-swal-container .carousel-arrow.left {
+    margin-right: 10px;
+}
+
+::ng-deep .custom-swal-container .carousel-arrow.right {
+    margin-left: 10px;
+}
+
+::ng-deep .preview-swal-container {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+::ng-deep .preview-swal-popup {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+
+::ng-deep .preview-container {
+    margin-left: 100px;
+    position: relative;
+    width: 90vw;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+::ng-deep .preview-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+::ng-deep .close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+::ng-deep .close-button:hover {
+    color: #ccc;
+}
+
+.checkbox-wrapper * {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-wrapper label {
+    --size: 30px;
+    --shadow: calc(var(--size) * .07) calc(var(--size) * .1);
+    position: relative;
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    margin: 0 auto;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #3776ff 46%, #70c8ff 100%);
+    border-radius: 50%;
+    box-shadow: 0 var(--shadow) #ffbeb8;
+    cursor: pointer;
+    transition: 0.2s ease transform, 0.2s ease background-color,
+        0.2s ease box-shadow;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.checkbox-wrapper label:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    width: calc(var(--size) * .7);
+    height: calc(var(--size) * .7);
+    margin: 0 auto;
+    background-color: #fff;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    box-shadow: inset 0 var(--shadow) #ffbeb8;
+    transition: 0.2s ease width, 0.2s ease height;
+}
+
+.checkbox-wrapper label:hover:before {
+    width: calc(var(--size) * .55);
+    height: calc(var(--size) * .55);
+    box-shadow: inset 0 var(--shadow) #ff9d96;
+}
+
+.checkbox-wrapper label:active {
+    transform: scale(0.9);
+}
+
+.checkbox-wrapper .tick_mark {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    left: calc(var(--size) * -.05);
+    width: calc(var(--size) * .6);
+    height: calc(var(--size) * .6);
+    margin: 0 auto;
+    margin-left: calc(var(--size) * .14);
+    transform: rotateZ(-40deg);
+}
+
+.checkbox-wrapper .tick_mark:before,
+.checkbox-wrapper .tick_mark:after {
+    content: "";
+    position: absolute;
+    background-color: #fff;
+    border-radius: 2px;
+    opacity: 0;
+    transition: 0.2s ease transform, 0.2s ease opacity;
+}
+
+.checkbox-wrapper .tick_mark:before {
+    left: 0;
+    bottom: 0;
+    width: calc(var(--size) * .1);
+    height: calc(var(--size) * .3);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
+    transform: translateY(calc(var(--size) * -.68));
+}
+
+.checkbox-wrapper .tick_mark:after {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(var(--size) * .1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
+    transform: translateX(calc(var(--size) * .78));
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked+label {
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #2f6eff 46%, #70e2ff 100%);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked+label:before {
+    width: 0;
+    height: 0;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked+label .tick_mark:before,
+.checkbox-wrapper input[type="checkbox"]:checked+label .tick_mark:after {
+    transform: translate(0);
+    opacity: 1;
+}

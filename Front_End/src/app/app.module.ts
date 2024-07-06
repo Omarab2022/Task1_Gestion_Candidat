@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { CandidatComponent } from './Components/candidat/candidat.component';
-import { FormationsComponent } from './Components/formations/formations.component';
 import { CertificationsComponent } from './Components/certifications/certifications.component';
 import { HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {  FormsModule } from '@angular/forms';
@@ -15,7 +14,6 @@ import {  FormsModule } from '@angular/forms';
     AppComponent,
     DashboardComponent,
     CandidatComponent,
-    FormationsComponent,
     CertificationsComponent,
 
   ],
