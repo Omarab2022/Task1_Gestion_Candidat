@@ -40,6 +40,7 @@ export class CandidatComponent implements OnInit{
  
   }
 
+  //getall candidats
 
   getAllCandidats(){
 
@@ -56,6 +57,7 @@ export class CandidatComponent implements OnInit{
     });
   }
 
+  //get all certificates
   getAllCertificates() {
     this.certificateService.getCertificateTemplates().subscribe({
       next: (certificates) => {
@@ -67,6 +69,7 @@ export class CandidatComponent implements OnInit{
     });
   }
 
+  //show candidat form
   showAddCandidatForm() {
     Swal.fire({
       title: 'Add New Candidate',
@@ -89,6 +92,7 @@ export class CandidatComponent implements OnInit{
     });
   }
   
+  //add candidat
   addCandidat(candidatData: any) {
     if (!candidatData.name || !candidatData.score || !candidatData.dateNaissance) {
       Swal.fire('Error', 'All fields are required', 'error');
@@ -113,6 +117,7 @@ export class CandidatComponent implements OnInit{
     });
   }
 
+  //delete candidat
   onDelete(id: any) {
     Swal.fire({
       title: 'Êtes-vous sûr?',
@@ -149,6 +154,7 @@ export class CandidatComponent implements OnInit{
   }
 
 
+  //show candidat details
   showDetails(id: number) {
     this.candidatservice.getCandidatById(id).subscribe({
       next: (candidat) => {
@@ -162,7 +168,6 @@ export class CandidatComponent implements OnInit{
     });
   }
 
-  
   openModal() {
     if (this.selectedCandidat) {
       Swal.fire({
@@ -181,6 +186,7 @@ export class CandidatComponent implements OnInit{
 
 
 
+  //show update form
   showUpdateForm(candidat: Candidat) {
     this.updateForm.patchValue(candidat);
     Swal.fire({

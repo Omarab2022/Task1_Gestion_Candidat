@@ -208,4 +208,48 @@ export class CertificationsComponent implements OnInit {
       Swal.fire('Error', 'Please select a file', 'error');
     }
   }
+
+  printCertificate(certificateId: number) {
+    this.certificateService.getCertificateTemplateById(certificateId).subscribe({
+      next: (template) => {
+        if (template && template.templatePath) {
+          const imageUrl = this.getImageUrl(template.templatePath);
+
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
+  
+          iframe.contentWindow?.document.write(`
+            <html>
+              <head>
+                <title>${template.name}</title>
+                <style>
+                  body { margin: 0; }
+                  img { width: 100%; height: auto; }
+                </style>
+              </head>
+              <body>
+                <img src="${imageUrl}" onload="window.print(); window.close();">
+              </body>
+            </html>
+          `);
+          
+          iframe.contentWindow?.document.close();
+  
+          iframe.onload = function() {
+            setTimeout(() => {
+              document.body.removeChild(iframe);
+            }, 1000);
+          };
+        } else {
+          Swal.fire('Error', 'Certificate template not found or invalid', 'error');
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching certificate template:', error);
+        Swal.fire('Error', 'Unable to fetch certificate template', 'error');
+      }
+    });
+  }
+  
 }
