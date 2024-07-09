@@ -237,6 +237,7 @@ export class CandidatComponent implements OnInit{
     imageUrl: this.getImageUrl(cert.templatePath)
   }));
 
+
   let currentIndex = 0;
 
   const updateSlideContent = (index: number) => {
@@ -255,27 +256,8 @@ export class CandidatComponent implements OnInit{
 
   const showPreview = () => {
     const cert = certificateOptions[currentIndex];
-    Swal.fire({
-      title: '',
-      html: `
-        <div class="preview-container">
-          <button class="close-button">&times;</button>
-          <img src="${cert.imageUrl}" alt="${cert.text}" class="preview-image">
-        </div>
-      `,
-      showConfirmButton: false,
-      showCancelButton: false,
-      background: '#000',
-      customClass: {
-        container: 'preview-swal-container',
-        popup: 'preview-swal-popup'
-      },
-      didOpen: () => {
-        const closeButton = Swal.getPopup()!.querySelector('.close-button') as HTMLElement;
-        closeButton.addEventListener('click', () => Swal.close());
-      }
-    });
-  };
+    this.previewCertificate(cert, candidat);
+  }; 
 
   Swal.fire({
     title: 'Select a Certificate Template',
@@ -321,6 +303,68 @@ export class CandidatComponent implements OnInit{
   });
 }
 
+
+previewCertificate(cert: any, candidat: Candidat) {
+
+  const templateName = cert.imageUrl.split('/').pop()?.split('.')[0];
+  if (!templateName) {
+    Swal.fire('Error', 'Invalid template path', 'error');
+    return;
+  }
+  const templateUrl = `assets/templates/${templateName}/index.html`;
+  const styleUrl = `assets/templates/${templateName}/style.css`;
+
+  fetch(templateUrl)
+    .then(response => response.text())
+    .then(html => {
+      Swal.fire({
+        title: '',
+        html: `
+          <div class="preview-container">
+            <button class="close-button">&times;</button>
+            <iframe id="previewFrame" style="width: 100%; height: 100%; border: none;"></iframe>
+          </div>
+        `,
+        showConfirmButton: false,
+        showCancelButton: false,
+        background: '#fff',
+        customClass: {
+          container: 'preview-swal-container',
+          popup: 'preview-swal-popup'
+        },
+        didOpen: () => {
+          const closeButton = Swal.getPopup()!.querySelector('.close-button') as HTMLElement;
+          closeButton.addEventListener('click', () => Swal.close());
+
+          const iframe = document.getElementById('previewFrame') as HTMLIFrameElement;
+          if (iframe.contentWindow) {
+            iframe.contentWindow.document.open();
+            iframe.contentWindow.document.write(html);
+
+            // Inject styles
+            const styleLink = iframe.contentWindow.document.createElement('link');
+            styleLink.rel = 'stylesheet';
+            styleLink.href = styleUrl;
+            iframe.contentWindow.document.head.appendChild(styleLink);
+
+          
+            iframe.contentWindow.document.body.innerHTML = iframe.contentWindow.document.body.innerHTML
+            .replace('{{candidateName}}', candidat.name)
+              .replace('{{score}}', candidat.score.toString())
+              .replace('{{dateNaissance}}', candidat.dateNaissance)
+              .replace('{{currentDate}}', new Date().toLocaleDateString());
+
+            iframe.contentWindow.document.close();
+          }
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error loading template:', error);
+      Swal.fire('Error', 'Failed to load certificate template', 'error');
+    });
+};
+
   getImageUrl(templatePath: string): string {
     if (!templatePath) return '';
     const fileName = templatePath.split('/').pop();
@@ -328,77 +372,62 @@ export class CandidatComponent implements OnInit{
   }
 
 
-
   //print certificate 
-
-printCertificate(candidat: Candidat, templateId: number) {
-
-  const certificateImageUrl = this.getImageUrl(this.certificates.find(c => c.id === templateId)?.templatePath || '');
-
-  const printWindow = window.open('', '_blank');
-  if (printWindow) {
-    printWindow.document.write(`
-      <html>
-        <head>
-          <title>Certificate for ${candidat.name}</title>
-          <style>
-            body {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 100vh;
-              margin: 0;
-              font-family: Arial, sans-serif;
-            }
-            .certificate-container {
-              position: relative;
-              width: 800px;
-              height: 600px;
-            }
-            .certificate-image {
-              width: 100%;
-              height: 100%;
-              object-fit: contain;
-            }
-            .certificate-text {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              text-align: center;
-              color: #000;
-              font-size: 24px;
-              font-weight: bold;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="certificate-container">
-            <img src="${certificateImageUrl}" alt="Certificate Template" class="certificate-image">
-            <div class="certificate-text">
-             
-              <h2>${candidat.name}</h2>
-              <p>has successfully completed the course</p>
-              <p>with a score of ${candidat.score}%</p>
-              <p>Date: ${new Date().toLocaleDateString()}</p>
-            </div>
-          </div>
-        </body>
-      </html>
-    `);
-
-    printWindow.document.querySelector('img')?.addEventListener('load', () => {
-      printWindow.print();
-      printWindow.close();
-      candidat.isPrinted = true;
-      this.changeDetectorRef.detectChanges();
-      
-    });
-  } else {
-    console.error('Unable to open print window');
-    Swal.fire('Error', 'Unable to open print window. Please check your popup blocker settings.', 'error');
+  printCertificate(candidat: Candidat, templateId: number) {
+    const selectedTemplate = this.certificates.find(c => c.id === templateId);
+    if (!selectedTemplate) {
+      Swal.fire('Error', 'Template not found', 'error');
+      return;
+    }
+  
+    // Extract the template name from the templatePath
+    const templateName = selectedTemplate.templatePath.split('/').pop()?.split('.')[0];
+    if (!templateName) {
+      Swal.fire('Error', 'Invalid template path', 'error');
+      return;
+    }
+  
+    const templateUrl = `assets/templates/${templateName}/index.html`;
+    const styleUrl = `assets/templates/${templateName}/style.css`;
+  
+    fetch(templateUrl)
+      .then(response => response.text())
+      .then(html => {
+        const printWindow = window.open('', '_blank');
+        if (printWindow) {
+          printWindow.document.write(html);
+          
+          // Inject styles
+          const styleLink = printWindow.document.createElement('link');
+          styleLink.rel = 'stylesheet';
+          styleLink.href = styleUrl;
+          printWindow.document.head.appendChild(styleLink);
+  
+          // Replace placeholders with actual data
+          printWindow.document.body.innerHTML = printWindow.document.body.innerHTML
+            .replace('{{candidateName}}', candidat.name)
+            .replace('{{score}}', candidat.score.toString())
+            .replace('{{dateNaissance}}', candidat.dateNaissance)
+            .replace('{{currentDate}}', new Date().toLocaleDateString());
+  
+          styleLink.onload = () => {
+            setTimeout(() => {
+              printWindow.print();
+              printWindow.close();
+              candidat.isPrinted = true;
+              this.changeDetectorRef.detectChanges();
+            }, 500); 
+          };
+        } else {
+          console.error('Unable to open print window');
+          Swal.fire('Error', 'Unable to open print window. Please check your popup blocker settings.', 'error');
+        }
+      })
+      .catch(error => {
+        console.error('Error loading template:', error);
+        Swal.fire('Error', 'Failed to load certificate template', 'error');
+      });
   }
-}
 
 
 }

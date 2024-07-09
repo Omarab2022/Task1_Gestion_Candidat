@@ -1,0 +1,107 @@
+@page {
+    size: A4 landscape;
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    height: 170mm;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.border-pattern {
+    margin-top: 80px;
+    position: absolute;
+    height: 188mm;
+    width: 267mm;
+    border: 1mm solid #045fa3;
+    background-color: #d6d6e4;
+    background-image: url("https://static.vecteezy.com/system/resources/previews/004/399/339/non_2x/modern-certificate-with-abstract-gradient-background-free-vector.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+
+
+.content {
+    position: absolute;
+    left: 10mm;
+    top: 10mm;
+    height: 167mm;
+    width: 245mm;
+    border: 1mm solid #045fa3;
+    background: white;
+}
+
+.inner-content {
+
+    border: 1mm solid #045fa3;
+    margin: 4mm;
+    padding: 10mm;
+    height: 135mm;
+    text-align: center;
+}
+
+h1 {
+    text-transform: uppercase;
+    font-size: 48pt;
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 24pt;
+    margin-top: 0;
+    padding-bottom: 1mm;
+    display: inline-block;
+    border-bottom: 1mm solid #045fa3;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    padding-bottom: 4mm;
+    border-bottom: 1mm solid #045fa3;
+}
+
+h3 {
+    font-size: 20pt;
+    margin-bottom: 0;
+    margin-top: 4mm;
+    color: #045fa3;
+}
+
+p {
+    font-size: 16pt;
+}
+
+.badge img {
+    width: 30mm;
+    height: 30mm;
+    position: absolute;
+    right: 10mm;
+    bottom: 10mm;
+
+}
+
+.badge-left img {
+    width: 30mm;
+    height: 30mm;
+    position: absolute;
+    left: 10mm;
+    bottom: 10mm;
+
+}
+
+.top-left img {
+    width: 50mm;
+    height: 45mm;
+    position: absolute;
+    left: 10mm;
+    top: 10mm;
+
+}
