@@ -70,6 +70,7 @@ export class CandidatComponent implements OnInit{
   }
 
   //show candidat form
+
   showAddCandidatForm() {
     Swal.fire({
       title: 'Add New Candidate',
@@ -107,7 +108,7 @@ export class CandidatComponent implements OnInit{
     this.candidatservice.addCandidat(candidatData).subscribe({
       next: (newCandidat) => {
         console.log('New candidate added:', newCandidat);
-        this.getAllCandidats(); // Refresh the list
+        this.getAllCandidats(); 
         Swal.fire('Success', 'New candidate added successfully', 'success');
       },
       error: (error) => {
@@ -380,7 +381,7 @@ previewCertificate(cert: any, candidat: Candidat) {
       return;
     }
   
-    // Extract the template name from the templatePath
+   
     const templateName = selectedTemplate.templatePath.split('/').pop()?.split('.')[0];
     if (!templateName) {
       Swal.fire('Error', 'Invalid template path', 'error');
