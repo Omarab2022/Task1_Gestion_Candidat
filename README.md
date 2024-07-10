@@ -16,7 +16,7 @@
 
 <img width="1440" alt="Screen Shot 2024-07-10 at 12 37 22" src="https://github.com/Omarab2022/Task1_Gestion_Candidat_Formation/assets/99898445/7acc5564-6bae-48e3-87a9-0b0fb1bf2f1a">
 
-<img width="1440" alt="Screen Shot 2024-07-10 at 12 37 13" src="https://github.com/Omarab2022/Task1_Gestion_Candidat_Formation/assets/99898445/34c94512-df3e-4a09-b71f-677f6bdc9759">
+<img width="1440" alt="Screen Shot 2024-07-10 at 12 32 43" src="https://github.com/Omarab2022/Task1_Gestion_Candidat_Formation/assets/99898445/82b53904-7cef-4f39-bad4-692c38dee5c4">
 
 ## Search
 
