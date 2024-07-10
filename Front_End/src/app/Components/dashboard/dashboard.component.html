@@ -2,35 +2,37 @@
     <div class="left">
         <h1>Dashboard</h1>
         <ul class="breadcrumb">
-            <li><a href="#">
-                    Dashboard
-                </a></li>
+            <li><a href="#">Dashboard</a></li>
             /
             <li><a href="#" class="active">Dashboard</a></li>
         </ul>
     </div>
-
 </div>
-
 
 <ul class="insights">
     <li class="first">
         <i class='bx bx-smile'></i>
         <span class="info">
-            <h3>
-                {{this.CountCandidat}}
-            </h3>
+            <h3>{{this.CountCandidat}}</h3>
             <p>Our Candidat</p>
         </span>
     </li>
-    <li class="second"><i class='bx bx-book'></i>
+    <li class="second">
+        <i class='bx bx-book'></i>
         <span class="info">
-            <h3>
-                {{this.CountCertification}}
-            </h3>
+            <h3>{{this.CountCertification}}</h3>
             <p>Certifications</p>
         </span>
     </li>
-
-
 </ul>
+
+<div class="charts-container">
+    <div class="chart">
+        <h3>Candidates Over Time</h3>
+        <canvas id="candidatesChart"></canvas>
+    </div>
+    <div class="chart">
+        <h3>Certifications Over Time</h3>
+        <canvas id="certificationsChart"></canvas>
+    </div>
+</div>

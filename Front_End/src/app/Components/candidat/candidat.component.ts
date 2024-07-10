@@ -17,6 +17,9 @@ export class CandidatComponent implements OnInit{
   public selectedCandidat: Candidat | null = null;
   updateForm :FormGroup;
   certificates: CertificateTemplate[] = [];
+  searchTerm: string = '';
+filteredCandidats: any[] = [];
+
 
   
   constructor(
@@ -42,15 +45,13 @@ export class CandidatComponent implements OnInit{
 
   //getall candidats
 
-  getAllCandidats(){
-
-    this.candidatservice.getCondidats().subscribe( {
+  getAllCandidats() {
+    this.candidatservice.getCondidats().subscribe({
       next: value => {
-  
         this.candidats = value;
+        this.filteredCandidats = value;
         console.log('Received data:', value);
       },
-  
       error: (error) => {
         console.log(error);
       }
@@ -67,6 +68,18 @@ export class CandidatComponent implements OnInit{
         console.error('Error fetching certificates:', error);
       }
     });
+  }
+
+  //search
+  searchCandidats() {
+    if (!this.searchTerm) {
+      this.filteredCandidats = this.candidats;
+    } else {
+      this.filteredCandidats = this.candidats.filter((candidat: { name: string; }) =>
+        candidat.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+    console.log('Filtered candidats:', this.filteredCandidats);
   }
 
   //show candidat form

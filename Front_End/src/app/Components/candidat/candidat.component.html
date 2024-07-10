@@ -14,10 +14,15 @@
             <i class='bx bx-smile'></i>
             <h3>Our Candidats</h3>
 
+            <div class="search-container">
+                <input type="text" [(ngModel)]="searchTerm" (input)="searchCandidats()"
+                    placeholder="Search candidats...">
+                <i class='bx bx-search'></i>
+            </div>
+
             <a href="javascript:void(0);" (click)="showAddCandidatForm()">
                 <i style="background-color: blue;border-radius: 50%; color: aliceblue;" class='bx bx-plus'></i>
             </a>
-
         </div>
 
         <table>
@@ -37,8 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let candidat of candidats ; let i = index">
-
+                <tr *ngFor="let candidat of filteredCandidats; let i = index">
                     <td>{{ candidat.id }}</td>
                     <td>{{ candidat.name }}</td>
                     <td>{{ candidat.score }}</td>
@@ -64,5 +68,9 @@
                 </tr>
             </tbody>
         </table>
+
+
+
+
     </div>
 </div>

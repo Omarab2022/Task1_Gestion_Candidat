@@ -14,6 +14,12 @@
             <i class='bx bx-receipt'></i>
             <h3>Our Certifications Template</h3>
 
+            <div class="search-container">
+                <input type="text" [(ngModel)]="searchTerm" (input)="searchCertificate()"
+                    placeholder="Search candidats...">
+                <i class='bx bx-search'></i>
+            </div>
+
             <a (click)="showAddForm()">
                 <i style="background-color: blue;border-radius: 50%; color: aliceblue;" class='bx bx-plus'></i>
             </a>
@@ -25,6 +31,7 @@
                 <tr>
 
                     <th>Id</th>
+
                     <th>Name</th>
 
 
@@ -32,13 +39,15 @@
                     <th>Update</th>
                     <th>View Details</th>
                     <th>Print</th>
+                    <th>Image</th>
 
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let certif of certificates">
+                <tr *ngFor="let certif of filteredCertificate">
 
                     <td>{{ certif.id }}</td>
+
                     <td>{{ certif.name }}</td>
 
 
@@ -55,6 +64,9 @@
                     </td>
                     <td>
                         <button class="btn btn-primary" (click)="printCertificate(certif.id)"> Print</button>
+                    </td>
+                    <td>
+                        <img class="certifimg" [src]="getImageUrl(certif.templatePath)" alt="Certificate Template">
                     </td>
 
 

@@ -1,6 +1,6 @@
+import { CertificateTemplate } from './../../../Models/candidat.model';
 import { Component, OnInit } from '@angular/core';
 import { CertificateTemplateService } from '../../../Services/certificate-template.service';
-import { CertificateTemplate } from '../../../Models/candidat.model';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -14,6 +14,8 @@ export class CertificationsComponent implements OnInit {
   public certificates: any;
   public selectedCertificate: CertificateTemplate | null = null;
   updateForm: FormGroup;
+  searchTerm: string = '';
+  filteredCertificate: any[] = [];
 
   constructor(
     private certificateService: CertificateTemplateService,
@@ -34,6 +36,7 @@ export class CertificationsComponent implements OnInit {
     this.certificateService.getCertificateTemplates().subscribe({
       next: value => {
         this.certificates = value;
+        this.filteredCertificate = value;
         console.log('Received data:', value);
       },
       error: (error) => {
@@ -41,6 +44,18 @@ export class CertificationsComponent implements OnInit {
       }
     });
   }
+
+    //search
+    searchCertificate() {
+      if (!this.searchTerm) {
+        this.filteredCertificate = this.certificates;
+      } else {
+        this.filteredCertificate = this.certificates.filter((CertificateTemplate: { name: string; }) =>
+          CertificateTemplate.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        );
+      }
+      console.log('Filtered candidats:', this.filteredCertificate);
+    }
 
   onDelete(id: number) {
     Swal.fire({
